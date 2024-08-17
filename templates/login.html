@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-size: cover;
+            background-color: #3a3838;
+            background-image: url('static/images/3.jpg');
+            background-position: top left;
+            background-repeat: repeat;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-form {
+            background: rgba(192, 187, 187, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #100f0f;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        
+
+        }
+        input[type="text"], input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .flash-message {
+            margin-bottom: 20px;
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .register-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h1>Login</h1>
+
+            <!-- Flash Message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Login Form -->
+            <form action="{{ url_for('login') }}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <input type="submit" value="Login">
+            </form>
+            <p class="register-link">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+        </div>
+    </div>
+</body>
+</html>

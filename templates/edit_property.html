@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Property</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #3a3838;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #323030;
+        }
+        .container {
+            background-color: #beb7b7;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            font-size: 16px;
+        }
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            color: #7c2f26;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Property</h1>
+        <form action="{{ url_for('edit_property_action', id=property._id) }}" method="post">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ property.address }}" required>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ property.city }}" required>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" value="{{ property.price }}" required>
+
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" id="bedrooms" name="bedrooms" value="{{ property.bedrooms }}" required>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <input type="number" id="bathrooms" name="bathrooms" value="{{ property.bathrooms }}" step="0.1" required>
+
+            <label for="listing_date">Listing Date:</label>
+            <input type="date" id="listing_date" name="listing_date" value="{{ property.listing_date if property.listing_date else '' }}">
+
+            <label for="rent_or_sale_date">Rent or Sale Date:</label>
+            <input type="date" id="rent_or_sale_date" name="rent_or_sale_date" value="{{ property.rent_or_sale_date if property.rent_or_sale_date else '' }}">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="Rented" {% if property.status == 'Rented' %}selected{% endif %}>Rented</option>
+                <option value="Available" {% if property.status == 'Available' %}selected{% endif %}>Available</option>
+                <option value="Sold out" {% if property.status == 'Sold out' %}selected{% endif %}>Sold out</option>
+            </select>
+
+            <label for="transaction_type">Transaction Type:</label>
+            <select id="transaction_type" name="transaction_type" required>
+                <option value="Sale" {% if property.transaction_type == 'Sale' %}selected{% endif %}>Sale</option>
+                <option value="Rent" {% if property.transaction_type == 'Rent' %}selected{% endif %}>Rent</option>
+            </select>
+
+            <input type="submit" value="Update Property">
+        </form>
+        <p><a href="{{ url_for('index') }}">Back to Property Listings</a></p>
+    </div>
+</body>
+</html>

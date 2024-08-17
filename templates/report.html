@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #3a3838;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #beb7b7;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1024px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #ecc0c0;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .export-form {
+            margin-top: 20px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            color: #7c2f26;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Report Results: {{ report_type.replace('_', ' ').title() }}</h1>
+        <p>For the period: {{ start_date }} to {{ end_date }}</p>
+        {% if properties %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Price</th>
+                        <th>Bedrooms</th>
+                        <th>Bathrooms</th>
+                        <th>Listing Date</th>
+                        <th>Status</th>
+                        <th>Transaction Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                        <tr>
+                            <td>{{ property.address }}</td>
+                            <td>{{ property.city }}</td>
+                            <td>${{ property.price }}</td>
+                            <td>{{ property.bedrooms }}</td>
+                            <td>{{ property.bathrooms }}</td>
+                            <td>{{ property.listing_date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ property.status }}</td>
+                            <td>{{ property.transaction_type }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No properties found for the selected criteria.</p>
+        {% endif %}
+        <div class="export-form">
+            <form action="{{ url_for('export_report') }}" method="post">
+                <input type="hidden" name="report_type" value="{{ report_type }}">
+                <input type="hidden" name="start_date" value="{{ start_date }}">
+                <input type="hidden" name="end_date" value="{{ end_date }}">
+                <input type="submit" value="Export to Excel">
+            </form>
+        </div>
+        <p><a href="{{ url_for('generate_report') }}">Back to Report Generation</a></p>
+    </div>
+</body>
+</html>

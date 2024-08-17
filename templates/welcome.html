@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        /* Reset default margin and padding */
+        body, h1, p, a {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Basic styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3a3838;
+            
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        /* Container styling */
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #beb7b7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Header styling */
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Paragraph styling */
+        p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Link styling */
+        a {
+            
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Link hover effect */
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>We're glad to have you back. You can now browse the properties.</p>
+        <a href="{{ url_for('index') }}">Go to Properties</a>
+    </div>
+</body>
+</html>
